@@ -1,30 +1,32 @@
-//used an inner recursive function (even after refactoring) for time performance (rather not pass a huge pyramid array on each recursive call)
-const longestSlideDown = (pyramid) => {
-    const recursiveFunc = (acc, row, col) => {
+//used an inner recursive function for code clarity. An outer recursive function can be used after refactoring    
+function longestSlideDown(pyramid) {
+
+    const recursive = (acc, row, col) => {
         let solutions = [];
         //base case: return result of successive accumulations when bottom of the pyramid is reached       
-        if (row === pyramid.length - 1) {   return acc
+        if (row === pyramid.length - 1) {
+            return acc;
         } else {
             //accumulate value positioned below-left and below-right
-            solutions = [recursiveFunc(acc + pyramid[row + 1][col], row + 1, col),
-                         recursiveFunc(acc + pyramid[row + 1][col + 1], row + 1, col + 1)]
+            solutions = [recursive(acc + pyramid[row + 1][col], row + 1, col, solutions),              
+                         recursive(acc + pyramid[row + 1][col + 1], row + 1, col + 1, solutions)]
         }
         // at the end of context of execution, return highest of the 2 values returned per call stack       
         return Math.max(...solutions);
     };
-    //invoke inner function and return its output 
-    return recursiveFunc(pyramid[0][0], 0, 0);
+    //invoke inner function and return its output
+    return recursive(pyramid[0][0], 0, 0);
 };
 
 //test cases:
-console.time('longestSlideDown');
 console.log(longestSlideDown(
     [[3],
     [7, 4],
     [2, 4, 6],
     [8, 5, 9, 3]])
 ); //should be 23
-console.timeEnd('longestSlideDown');
+
+console.time('longestSlideDown');
 console.log(longestSlideDown(
     [[75],
     [95, 64],
@@ -42,3 +44,6 @@ console.log(longestSlideDown(
     [63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
     [4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23]]
 )); //should be 1074
+console.timeEnd('longestSlideDown'); //26.5ms 
+
+ 
