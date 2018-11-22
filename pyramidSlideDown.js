@@ -44,6 +44,18 @@ console.log(longestSlideDown(
     [63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
     [4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23]]
 )); //should be 1074
-console.timeEnd('longestSlideDown'); //26ms, 20 after refactoring further (see ReadMe.md)
+console.timeEnd('longestSlideDown'); //26ms, 20 after refactoring further (see Below)
+/*
+Time performance still not under limit on CodeWars. I refactored my code further:
 
- 
+const longestSlideDown = (pyramid) =>
+    (recursiveFunc = (acc, row, col) =>
+        row === pyramid.length - 1 ? acc : Math.max(
+            recursiveFunc(acc + pyramid[row + 1][col], row + 1, col),
+            recursiveFunc(acc + pyramid[row + 1][col + 1], row + 1, col + 1)
+        )
+    )(pyramid[0][0], 0, 0);
+;
+
+accepting any suggestions.
+*/
